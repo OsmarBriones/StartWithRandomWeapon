@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-[BepInPlugin("com.osmarbriones.startwithrandomweapon", "Start With Random Weapon", "1.0.0")]
+[BepInPlugin("com.osmarbriones.startwithrandomweapon", "StartWithRandomWeapon", "1.0.1")]
 public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 {
 	internal static List<string> ConfigItemKeys = new List<string>();
