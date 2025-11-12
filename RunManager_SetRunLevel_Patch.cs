@@ -20,7 +20,7 @@ namespace StartWithRandomWeapon
 
 			if (available.Count == 0)
 			{
-				StartWithRandomWeaponPlugin.Log?.LogWarning("[StartWithItemPatch] No configured starting items are valid/present.");
+				Debug.Log("[StartWithItemPatch] No configured starting items are valid/present.");
 				return;
 			}
 
@@ -29,7 +29,7 @@ namespace StartWithRandomWeapon
 
 			PurchaseItems(statsManager, selectedItems);
 
-			StartWithRandomWeaponPlugin.Log?.LogInfo($"[StartWithItemPatch] Spawned {selectedItems.Count} unique starting item(s): {string.Join(", ", selectedItems)}");
+			Debug.Log($"[StartWithItemPatch] Spawned {selectedItems.Count} unique starting item(s): {string.Join(", ", selectedItems)}");
 		}
 
 		private static bool CanSpawn(RunManager runManager)

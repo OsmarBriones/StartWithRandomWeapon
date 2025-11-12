@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using UnityEngine;
 
 namespace StartWithRandomWeapon
 {
@@ -11,13 +12,13 @@ namespace StartWithRandomWeapon
 		// If true, ignore WeaponsToSpawn and spawn one weapon per current player.
 		internal static ConfigEntry<bool> SpawnOnePerPlayer;
 
-		// Call this once from your plugin Awake (after Log is set).
+		// Call this once from your plugin Awake (after Log is set). 
 		internal static void BindConfig(StartWithRandomWeaponPlugin plugin)
 		{
 			WeaponsToSpawn = plugin.Config.Bind(
 				"General",
 				"WeaponsToSpawn",
-				1,
+				3,
 				new ConfigDescription(
 					"Number of starting weapons to spawn (ignored if SpawnOnePerPlayer is true).",
 					new AcceptableValueRange<int>(1, 50))
@@ -26,12 +27,12 @@ namespace StartWithRandomWeapon
 			SpawnOnePerPlayer = plugin.Config.Bind(
 				"General",
 				"SpawnOnePerPlayer",
-				false,
+				true,
 				new ConfigDescription(
 					"If true, ignore WeaponsToSpawn and spawn one starting weapon per current player.")
 			);
 
-			StartWithRandomWeaponPlugin.Log?.LogInfo($"[StartWithRandomWeapon] Config loaded: WeaponsToSpawn = {WeaponsToSpawn.Value}, SpawnOnePerPlayer = {SpawnOnePerPlayer.Value}");
+			Debug.Log($"[StartWithRandomWeapon] Config loaded: WeaponsToSpawn = {WeaponsToSpawn.Value}, SpawnOnePerPlayer = {SpawnOnePerPlayer.Value}");
 		}
 	}
 }

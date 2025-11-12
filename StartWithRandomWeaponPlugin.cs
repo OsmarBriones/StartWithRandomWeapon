@@ -1,31 +1,29 @@
 ﻿using BepInEx;
-using BepInEx.Logging;
 using HarmonyLib;
 using StartWithRandomWeapon;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 
 [BepInPlugin("com.osmarbriones.startwithrandomweapon", "Start With Random Weapon", "1.0.0")]
 public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 {
-	internal static ManualLogSource Log;
 	internal static List<string> ConfigItemKeys = new List<string>();
 
-	private const string DefaultFileName = "StartWithRandomWeaponItems_weaponsList.txt";
+	private const string DefaultFileName = "com.osmarbriones.startwithrandomweapon_weaponsList.txt";
 	private static string _configFilePath;
 
 	private void Awake()
 	{
-		Log = Logger;
-		Logger.LogInfo("StartWithRandomWeaponPlugin initializing...");
+		Debug.Log("StartWithRandomWeaponPlugin initializing...");
 		_configFilePath = Path.Combine(BepInEx.Paths.ConfigPath, DefaultFileName);
 		StartWithRandomWeaponConfig.BindConfig(this);
 
 		var harmony = new Harmony("com.osmarbriones.startwithrandomweapon");
 		harmony.PatchAll();
-		Logger.LogInfo("StartWithRandomWeaponPlugin initialized.");
+		Debug.Log("StartWithRandomWeaponPlugin initialized.");
 	}
 
 	/// <summary>
@@ -47,18 +45,18 @@ public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 			{
 				string[] defaults =
 				{
-					"Item Cart Cannon",
-					"Item Cart Laser",
-					"Item Gun Handgun",
-					"Item Gun Laser",
-					"Item Gun Shockwave",
-					"Item Gun Shotgun",
-					"Item Gun Stun",
-					"Item Gun Tranq",
+					"#Item Cart Cannon",
+					"#Item Cart Laser",
+					"#Item Gun Handgun",
+					"#Item Gun Laser",
+					"#Item Gun Shockwave",
+					"#Item Gun Shotgun",
+					"#Item Gun Stun",
+					"#Item Gun Tranq",
 					"Item Melee Baseball Bat",
 					"Item Melee Frying Pan",
 					"Item Melee Inflatable Hammer",
-					"Item Melee Sledge Hammer",
+					"#Item Melee Sledge Hammer",
 					"Item Melee Stun Baton",
 					"Item Melee Sword",
 					"Item Rubber Duck"
@@ -69,11 +67,10 @@ public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 					"# One item name per line.",
 					"# Lines starting with # are comments.",
 					"# Blank lines are ignored.",
-					"# Press F6 in-game after editing to reload.",
 					""
 				}.Concat(defaults));
 
-				Log?.LogInfo("[StartWithRandomWeapon] Created default item list file: " + _configFilePath);
+				Debug.Log("[StartWithRandomWeapon] Created default item list file: " + _configFilePath);
 				ConfigItemKeys = new List<string>(defaults);
 			}
 			else
@@ -85,17 +82,25 @@ public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 					.Distinct()
 					.ToList();
 
-				Log?.LogInfo($"[StartWithRandomWeapon] Reloaded {ConfigItemKeys.Count} item keys from: {_configFilePath}");
+				Debug.Log($"[StartWithRandomWeapon] Reloaded {ConfigItemKeys.Count} item keys from: {_configFilePath}");
 			}
 
 			if (ConfigItemKeys.Count == 0)
 			{
-				Log?.LogWarning("[StartWithRandomWeapon] Item list is empty after reload.");
+				Debug.LogWarning("[StartWithRandomWeapon] Item list is empty after reload.");
 			}
+			else
+			{
+				foreach (string itemKey in ConfigItemKeys)
+				{
+					Debug.Log($"[StartWithRandomWeapon]   Item Key: {itemKey}");
+				}
+			}
+
 		}
 		catch (Exception ex)
 		{
-			Log?.LogError("[StartWithRandomWeapon] Reload failed: " + ex.Message);
+			Debug.LogError("[StartWithRandomWeapon] Reload failed: " + ex.Message);
 			ConfigItemKeys = new List<string>();
 		}
 	}
