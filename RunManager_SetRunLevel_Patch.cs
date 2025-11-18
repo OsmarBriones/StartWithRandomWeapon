@@ -13,14 +13,14 @@ namespace StartWithRandomWeapon
 			if (!CanSpawn(__instance))
 				return;
 
-			StartWithRandomWeaponPlugin.EnsureItemsLoaded();
+			StartWithRandomWeaponConfig.ReloadConfig();
 
 			StatsManager statsManager = StatsManager.instance;
 			List<string> available = BuildAvailableList(statsManager);
 
 			if (available.Count == 0)
 			{
-				Debug.Log("[StartWithItemPatch] No configured starting items are valid/present.");
+				StartWithRandomWeaponPlugin.Log("No configured starting items are valid/present.");
 				return;
 			}
 
@@ -29,7 +29,7 @@ namespace StartWithRandomWeapon
 
 			PurchaseItems(statsManager, selectedItems);
 
-			Debug.Log($"[StartWithItemPatch] Spawned {selectedItems.Count} unique starting item(s): {string.Join(", ", selectedItems)}");
+			StartWithRandomWeaponPlugin.Log($"Spawned {selectedItems.Count} unique starting item(s): {string.Join(", ", selectedItems)}");
 		}
 
 		private static bool CanSpawn(RunManager runManager)
@@ -41,7 +41,7 @@ namespace StartWithRandomWeapon
 
 		private static List<string> BuildAvailableList(StatsManager stats)
 		{
-			return StartWithRandomWeaponPlugin.ConfigItemKeys
+			return StartWithRandomWeaponConfig.GetEnabledWeaponKeys()
 				.Where(k => stats.itemDictionary.ContainsKey(k))
 				.Where(k =>
 				{
