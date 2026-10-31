@@ -35,6 +35,9 @@ namespace StartWithRandomWeapon
 			{ "Item Gun Tranq", false },
 			{ "Item Gun Laser", false },
 			{ "Item Gun Shotgun", false },
+			{ "Item Staff Zero Gravity", false },
+			{ "Item Staff Torque", false },
+			{ "Item Staff Void", false },
 			{ "Item Cart Cannon", false },
 			{ "Item Cart Laser", false },
 		};
