@@ -18,24 +18,26 @@ namespace StartWithRandomWeapon
 		public static Dictionary<string, ConfigEntry<bool>> WeaponToggles =
 			new Dictionary<string, ConfigEntry<bool>>();
 
+		// Defaults follow the shop price (RepoKit/references/item-prices.md): enabled up to $20K,
+		// disabled from $22K up, like the hard enemy tier in EnemyDrops.
 		public static Dictionary<string, bool> WeaponDefaults { get; } = new Dictionary<string, bool>
 		{
 			{ "Item Rubber Duck", true },
 			{ "Item Melee Inflatable Hammer", true },
 			{ "Item Melee Frying Pan", true },
 			{ "Item Melee Sword", true },
-			{ "Item Melee Stun Baton", true },
-			{ "Item Melee Baseball Bat", true },
-			{ "Item Melee Whip", false },
+			{ "Item Melee Stun Baton", false },
+			{ "Item Melee Baseball Bat", false },
+			{ "Item Melee Whip", true },
 			{ "Item Melee Sledge Hammer", false },
-			{ "Item Gun Shockwave", false },
-			{ "Item Gun Stun", false },
-			{ "Item Gun Handgun", false },
+			{ "Item Gun Shockwave", true },
+			{ "Item Gun Stun", true },
+			{ "Item Gun Handgun", true },
 			{ "Item Gun Revolver", false },
-			{ "Item Gun Tranq", false },
+			{ "Item Gun Tranq", true },
 			{ "Item Gun Laser", false },
 			{ "Item Gun Shotgun", false },
-			{ "Item Staff Zero Gravity", false },
+			{ "Item Staff Zero Gravity", true },
 			{ "Item Staff Torque", false },
 			{ "Item Staff Void", false },
 			{ "Item Cart Cannon", false },
