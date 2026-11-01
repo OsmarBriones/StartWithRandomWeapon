@@ -26,7 +26,7 @@ namespace StartWithRandomWeapon
 			{ "Item Melee Sword", true },
 			{ "Item Melee Stun Baton", true },
 			{ "Item Melee Baseball Bat", true },
-			{ "Item Melee Whip", true },
+			{ "Item Melee Whip", false },
 			{ "Item Melee Sledge Hammer", false },
 			{ "Item Gun Shockwave", false },
 			{ "Item Gun Stun", false },
