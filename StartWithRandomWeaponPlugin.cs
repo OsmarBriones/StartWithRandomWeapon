@@ -1,26 +1,29 @@
-﻿using BepInEx;
+﻿#nullable enable
+using BepInEx;
+using BepInEx.Logging;
 using HarmonyLib;
-using StartWithRandomWeapon;
+using StartWithRandomWeapon.Configuration;
 
-[BepInPlugin("com.osmarbriones.startwithrandomweapon", "StartWithRandomWeapon", "1.1.0")]
+namespace StartWithRandomWeapon;
+
+[BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 {
-	public static StartWithRandomWeaponPlugin Instance { get; set; }
+	// The GUID names the config file (BepInEx/config/<GUID>.cfg); keep it stable so existing settings survive.
+	public const string PluginGuid = "com.osmarbriones.startwithrandomweapon";
+	public const string PluginName = "StartWithRandomWeapon";
+	public const string PluginVersion = "1.1.0";
+
+	internal static new ManualLogSource Logger { get; private set; } = null!;
 
 	private void Awake()
 	{
-		Instance = this;
+		Logger = base.Logger;
 
-		Log("StartWithRandomWeaponPlugin initializing...");
-		StartWithRandomWeaponConfig.BindConfig();
+		StartWithRandomWeaponConfig.Initialize(Config);
 
-		var harmony = new Harmony("com.osmarbriones.startwithrandomweapon");
-		harmony.PatchAll();
-		Log("StartWithRandomWeaponPlugin initialized.");
-	}
+		new Harmony(PluginGuid).PatchAll();
 
-	public static void Log(string Message)
-	{
-		Instance.Logger.LogInfo(Message);
+		Logger.LogInfo($"{PluginName} {PluginVersion} loaded!");
 	}
 }

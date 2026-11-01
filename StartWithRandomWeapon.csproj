@@ -1,81 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared TargetFramework/LangVersion/Nullable/game paths come from Directory.Build.props -->
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53D41DEB-9A66-4104-AD33-67B001526273}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StartWithRandomWeapon</RootNamespace>
     <AssemblyName>StartWithRandomWeapon</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Authors>Osmar Briones</Authors>
+    <Version>1.1.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <!-- Add Package Sources -->
+  <PropertyGroup>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.windows10ce.com/nuget/v3/index.json
+    </RestoreAdditionalProjectSources>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
+  <!-- Package References -->
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" IncludeAssets="build" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <!-- Submodule isolation: prevent SDK glob from including external submodules (RepoKit, RepoAPI)
+       unless explicitly included below. -->
+  <ItemGroup>
+    <Compile Remove="external\**" />
+    <EmbeddedResource Remove="external\**" />
+    <None Remove="external\**" />
+
+    <Compile Include="external\RepoAPI\Items\ItemName.cs" />
+    <Compile Include="external\RepoAPI\Game\**\*.cs" />
+  </ItemGroup>
+
+  <!-- Game and Unity References -->
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\harmony\Harmony-Fat.2.4.1.0\net48\0Harmony.dll</HintPath>
+      <HintPath>$(RepoBepInExCore)\0Harmony.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(RepoManaged)\Assembly-CSharp.dll</HintPath>
+      <Publicize>true</Publicize>
+      <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(RepoManaged)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>$(RepoBepInExCore)\BepInEx.dll</HintPath>
+      <Private>false</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="PhotonUnityNetworking">
+      <HintPath>$(RepoManaged)\PhotonUnityNetworking.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(RepoManaged)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(RepoManaged)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
     </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(RepoManaged)\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\REPO\REPO_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(RepoManaged)\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="RunManager_SetRunLevel_Patch.cs" />
-    <Compile Include="StartWithRandomWeaponConfig.cs" />
-    <Compile Include="StartWithRandomWeaponPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>set DEST="C:\Program Files (x86)\Steam\steamapps\common\REPO\BepInEx\plugins"
 
-if not exist %25DEST%25 mkdir %25DEST%25
+  <!-- PostBuild: deploy to Steam and r2modman Debug profile (skipped when building the template itself) -->
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(AssemblyName)' != '$([System.String]::Concat(&quot;RepoMod&quot;, &quot;Template&quot;))'">
+    <!-- Steam plugins directory -->
+    <Exec ContinueOnError="true" Command="set DEST=&quot;$(RepoRootPath)\BepInEx\plugins&quot;&#xD;&#xA;if not exist %25DEST%25 mkdir %25DEST%25&#xD;&#xA;xcopy /Y /R /I &quot;$(TargetPath)&quot; %25DEST%25\" />
 
-xcopy /Y /R /I "$(TargetPath)" %25DEST%25\</PostBuildEvent>
-  </PropertyGroup>
+    <!-- r2modman Debug profile (if present) -->
+    <PropertyGroup>
+      <R2ModmanDebugPlugins>$(APPDATA)\r2modmanPlus-local\REPO\profiles\Debug\BepInEx\plugins</R2ModmanDebugPlugins>
+    </PropertyGroup>
+    <Exec ContinueOnError="true" Command="if exist &quot;$(APPDATA)\r2modmanPlus-local\REPO\profiles\Debug&quot; (&#xD;&#xA;  if not exist &quot;$(R2ModmanDebugPlugins)&quot; mkdir &quot;$(R2ModmanDebugPlugins)&quot;&#xD;&#xA;  xcopy /Y /R /I &quot;$(TargetPath)&quot; &quot;$(R2ModmanDebugPlugins)\&quot;&#xD;&#xA;)" />
+  </Target>
+
+  <!-- Package everything into a Thunderstore-ready ZIP -->
+  <Target Name="PackThunderstore" AfterTargets="Build">
+    <PropertyGroup>
+      <ThunderstoreBuildDir>$(MSBuildProjectDirectory)\ts_build</ThunderstoreBuildDir>
+      <ThunderstoreOutDir>$(MSBuildProjectDirectory)\dist</ThunderstoreOutDir>
+      <ThunderstoreZip>$(ThunderstoreOutDir)\$(AssemblyName).zip</ThunderstoreZip>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(ThunderstoreOutDir)" />
+    <RemoveDir Directories="$(ThunderstoreBuildDir)" />
+    <MakeDir Directories="$(ThunderstoreBuildDir)" />
+
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ThunderstoreBuildDir)" />
+
+    <ItemGroup>
+      <ThunderstoreStaticFiles Include="$(MSBuildProjectDirectory)\README.md" />
+      <ThunderstoreStaticFiles Include="$(MSBuildProjectDirectory)\CHANGELOG.md" />
+      <ThunderstoreStaticFiles Include="$(MSBuildProjectDirectory)\manifest.json" />
+      <ThunderstoreStaticFiles Include="$(MSBuildProjectDirectory)\icon.png" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(ThunderstoreStaticFiles)" DestinationFolder="$(ThunderstoreBuildDir)" SkipUnchangedFiles="true" />
+    <Exec Command="powershell -NoLogo -NoProfile -Command &quot;Compress-Archive -Path '$(ThunderstoreBuildDir)\*' -DestinationPath '$(ThunderstoreZip)' -Force&quot;" />
+  </Target>
+
 </Project>
