@@ -1,9 +1,9 @@
 {
-  "name": "StartWithRandomWeapon",
-  "version_number": "1.1.0",
-  "website_url": "https://github.com/OsmarBriones/StartWithRandomWeapon",
-  "description": "Start every run with random weapons: melee, guns, staffs and carts. Choose which ones can appear. Fully configurable. Only the host needs to have it.",
-  "dependencies": [
-	"BepInEx-BepInExPack-5.4.2304"
-  ]
+    "name":  "StartWithRandomWeapon",
+    "version_number":  "1.2.0",
+    "website_url":  "https://github.com/OsmarBriones/StartWithRandomWeapon",
+    "description":  "Start every run with random weapons: melee, guns, staffs and carts. Choose which ones can appear. Fully configurable. Only the host needs to have it.",
+    "dependencies":  [
+                         "BepInEx-BepInExPack-5.4.2304"
+                     ]
 }

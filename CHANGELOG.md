@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.0] - 2026-11-02
 ### Added
 - New weapons from the Sunstone update: Melee Whip and Gun Revolver.
 - The three staffs (Zero Gravity, Torque, Void) can now be chosen as starting weapons.

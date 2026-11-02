@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -13,7 +13,7 @@ public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 	// The GUID names the config file (BepInEx/config/<GUID>.cfg); keep it stable so existing settings survive.
 	public const string PluginGuid = "com.osmarbriones.startwithrandomweapon";
 	public const string PluginName = "StartWithRandomWeapon";
-	public const string PluginVersion = "1.1.0";
+	public const string PluginVersion = "1.2.0";
 
 	internal Harmony? Harmony { get; set; }
 	internal static new ManualLogSource Logger { get; private set; } = null!;

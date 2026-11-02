@@ -31,7 +31,7 @@ StartWithRandomWeapon/
 ## Main Data Flow
 
 ### 1. Startup
-- `Awake` stores the logger, calls `StartWithRandomWeaponConfig.Initialize(Config)` and runs `Harmony.PatchAll()`.
+- `Awake` stores the logger, detaches the plugin object and marks it `HideAndDontSave` so scene changes cannot destroy it, calls `StartWithRandomWeaponConfig.Initialize(Config)` and runs `Harmony.PatchAll()`.
 - Initialization binds `[General]` settings and one `[Weapons]` toggle per entry of `weaponDefaults`.
 
 ### 2. Granting weapons (`RunManager_SetRunLevel_Patch`)
