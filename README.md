@@ -1,6 +1,10 @@
 # Start With Random Weapon
 Start every run in **R.E.P.O.** with one or more random weapons — fully configurable. Only the host needs to have this mod installed.
 
+## Preview
+
+![Gameplay Preview](https://raw.githubusercontent.com/OsmarBriones/StartWithRandomWeapon/master/assets/preview.gif)
+
 ## Features
 - Start each new game owning one or several random weapons.
 - Choose exactly which weapons can appear: melee weapons, guns, staffs and the weapon carts.
