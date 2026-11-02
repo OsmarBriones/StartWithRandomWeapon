@@ -20,6 +20,9 @@ internal static class RunManager_SetRunLevel_Patch
 
 		StartWithRandomWeaponConfig.Reload();
 
+		if (!StartWithRandomWeaponConfig.Enabled)
+			return;
+
 		var statsManager = StatsManager.instance;
 		var available = BuildAvailableList(statsManager);
 

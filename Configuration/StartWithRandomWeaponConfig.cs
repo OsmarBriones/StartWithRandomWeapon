@@ -14,6 +14,8 @@ internal static class StartWithRandomWeaponConfig
 {
 	private static ConfigFile? configFile;
 
+	private static ConfigEntry<bool>? enabled;
+
 	// Number of weapons to spawn (ignored if SpawnOnePerPlayer is true).
 	private static ConfigEntry<int>? weaponsToSpawn;
 
@@ -54,6 +56,8 @@ internal static class StartWithRandomWeaponConfig
 		(ItemName.CartLaser, false),
 	};
 
+	internal static bool Enabled => enabled?.Value ?? true;
+
 	internal static int WeaponsToSpawn => weaponsToSpawn?.Value ?? 1;
 
 	internal static bool SpawnOnePerPlayer => spawnOnePerPlayer?.Value ?? false;
@@ -64,6 +68,12 @@ internal static class StartWithRandomWeaponConfig
 	internal static void Initialize(ConfigFile config)
 	{
 		configFile = config ?? throw new ArgumentNullException(nameof(config));
+
+		enabled = config.Bind(
+			"General",
+			nameof(Enabled),
+			true,
+			new ConfigDescription("Enable or disable this mod."));
 
 		weaponsToSpawn = config.Bind(
 			"General",
@@ -107,7 +117,7 @@ internal static class StartWithRandomWeaponConfig
 		}
 
 		StartWithRandomWeaponPlugin.Logger.LogInfo(
-			$"Config loaded: WeaponsToSpawn = {WeaponsToSpawn}, " +
+			$"Config loaded: Enabled = {Enabled}, WeaponsToSpawn = {WeaponsToSpawn}, " +
 			$"SpawnOnePerPlayer = {SpawnOnePerPlayer}, " +
 			$"WeaponToggles = {string.Join(", ", weaponToggles.Select(kvp => $"{kvp.Key} = {kvp.Value.Value}"))}");
 	}

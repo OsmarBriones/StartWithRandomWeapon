@@ -4,6 +4,7 @@
 ### Added
 - New weapons from the Sunstone update: Melee Whip and Gun Revolver.
 - The three staffs (Zero Gravity, Torque, Void) can now be chosen as starting weapons.
+- An `Enabled` setting to turn the mod off without uninstalling it.
 - Two switches in the config menu: `ResetWeaponsToDefault` and `DisableAllWeapons`.
 
 ### Changed

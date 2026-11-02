@@ -36,7 +36,7 @@ StartWithRandomWeapon/
 
 ### 2. Granting weapons (`RunManager_SetRunLevel_Patch`)
 1. `CanSpawn`: only when `levelsCompleted == 0` and `StatsManager.instance` exists.
-2. `StartWithRandomWeaponConfig.Reload()` re-reads the `.cfg` so edits made while the game is open apply to this run.
+2. `StartWithRandomWeaponConfig.Reload()` re-reads the `.cfg` so edits made while the game is open apply to this run; the patch then stops if `Enabled` is false.
 3. `BuildAvailableList` keeps the enabled keys that exist in `StatsManager.itemDictionary`, are `physicalItem`, are not `disabled` and are not already owned. Keys the running game version lacks are skipped silently.
 4. `GetSpawnCount`: one per player when `SpawnOnePerPlayer`, otherwise `WeaponsToSpawn`, clamped to the available count.
 5. The list is shuffled (Fisher-Yates with `UnityEngine.Random`) and the first N keys go to `StatsManager.ItemPurchase`.

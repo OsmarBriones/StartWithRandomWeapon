@@ -31,6 +31,9 @@ BepInEx/config/com.osmarbriones.startwithrandomweapon.cfg
 ```
 
 ### [General]
+- **Enabled**
+  Turn the whole mod on or off without uninstalling it. Default: `true`.
+
 - **WeaponsToSpawn**
   Number of weapons to spawn at start (ignored if `SpawnOnePerPlayer` is true).
   Value range: **1–50**
