@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using StartWithRandomWeapon.Configuration;
+using UnityEngine;
 
 namespace StartWithRandomWeapon;
 
@@ -14,16 +15,27 @@ public class StartWithRandomWeaponPlugin : BaseUnityPlugin
 	public const string PluginName = "StartWithRandomWeapon";
 	public const string PluginVersion = "1.1.0";
 
+	internal Harmony? Harmony { get; set; }
 	internal static new ManualLogSource Logger { get; private set; } = null!;
 
 	private void Awake()
 	{
 		Logger = base.Logger;
 
+		// Prevent the plugin from being deleted
+		gameObject.transform.parent = null;
+		gameObject.hideFlags = HideFlags.HideAndDontSave;
+
 		StartWithRandomWeaponConfig.Initialize(Config);
 
-		new Harmony(PluginGuid).PatchAll();
+		Harmony = new Harmony(Info.Metadata.GUID);
+		Harmony.PatchAll();
 
 		Logger.LogInfo($"{PluginName} {PluginVersion} loaded!");
+	}
+
+	internal void Unpatch()
+	{
+		Harmony?.UnpatchSelf();
 	}
 }

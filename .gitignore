@@ -368,3 +368,5 @@ Thunderstore/
 dist/
 zip/
 *.zip
+
+thunderstore.toml

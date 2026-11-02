@@ -29,6 +29,9 @@ the data flow and design decisions.
   - Defaults follow the shop price (enabled up to $20K), see `ARCHITECTURE.md`.
 - Preserve existing local modifications. Do not reset, discard, or overwrite
   unrelated work.
+- Author vs. Technical Identifier: the human author is **always** `Osmar Briones` (README credits, `<Authors>` tag). Technical reverse-DNS `com.osmar` is reserved for GUIDs, config file names and namespaces; this mod keeps its legacy GUID `com.osmarbriones.startwithrandomweapon` on purpose (see Invariants).
+- Player-friendly README: `## Features` describes gameplay in accessible language. Never leak Unity hooks, Harmony patches, class/method names or architecture into `README.md`; those belong in `ARCHITECTURE.md`.
+- Spec Kit (SDD): pre-configured in `.specify/`; its constitution at `.specify/memory/constitution.md` enforces RepoKit, host authority and the coding standards. Use `/speckit-specify`, `/speckit-plan` and `/speckit-tasks` when developing features.
 - Testing: follow the 3-tier strategy in `external/RepoKit/REPO_MODS_METHODOLOGY.md` §8.
 - Coding standards: follow `external/RepoKit/REPO_MODS_METHODOLOGY.md` §6.
 - Maintain documentation with implementation: update this file, `README.md`,
